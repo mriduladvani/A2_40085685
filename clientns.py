@@ -74,10 +74,4 @@ elif(args.verbose!=True) and  (args.writefile):
     file.write(response[1])
     print("The above response has been written onto the file")
 
-
-
-
-
-
-
 client_socket.close()

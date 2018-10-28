@@ -111,15 +111,5 @@ if(req[0]=='GET'):
 else:
     post_param_calculate()
 
-
-
-
-
-
-
 conn.sendall(data.encode())
-
-
-
-
 s.close()
