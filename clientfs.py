@@ -8,7 +8,6 @@ parser.add_argument('-data', type=str, action='store', nargs='+', help='the data
 parser.add_argument('-URL', type=str, help='URL of the file server')
 parser.add_argument('-p', '--port', type=int,
                     help='the port on which the server is running and the one the client wants to connect to')
-parser.add_argument('-d', '--path', type=str, help='The path to which the user requires the server to connect')
 parser.add_argument('-cd', '--content_disposition', type=str, help='lets the user enter the content-disposition',
                     default='inline')
 args = parser.parse_args()
@@ -18,16 +17,17 @@ client_socket.connect(server_address)
 
 if args.request_type == 'get':
     if args.spec == '/':
-        req_to_be_sent = args.request_type + " " + args.spec + " " + args.path
+        req_to_be_sent = args.request_type + " " + args.spec
     elif (args.spec != '/') and args.content_disposition:
-        req_to_be_sent = args.request_type + " " + args.spec + " " + args.path + " " + args.content_disposition
+        req_to_be_sent = args.request_type + " " + args.spec + " " + args.content_disposition
     else:
-        req_to_be_sent = args.request_type + " " + args.spec + " " + args.path
+        req_to_be_sent = args.request_type + " " + args.spec
 else:
     data = "_".join(args.data)
-    req_to_be_sent = args.request_type + " " + args.spec + " " + args.path + " " + data
+    req_to_be_sent = args.request_type + " " + args.spec + " " + data
 
 client_socket.sendall(req_to_be_sent.encode())
 response = client_socket.recv(1024)
 response = response.decode()
 print(response)
+client_socket.close()
