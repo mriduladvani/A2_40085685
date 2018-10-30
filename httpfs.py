@@ -33,7 +33,9 @@ if req_type == 'get':
     if spec[1] == '':
         if def_dir_path == data[2]:
             arr = os.listdir(data[2])
-            response = ", ".join(arr)
+            response = "\n".join(arr)
+        elif '..' in data[2]:
+            response = "HTTP Error 403: You are not authorized to access the contents of this file"
         else:
             response = "HTTP Error 403: You are not authorized to access the contents of this file"
     else:
@@ -58,6 +60,8 @@ if req_type == 'get':
                 response = response + headers(ct, cd)
             finally:
                 if file: file.close()
+        elif '..' in data[2]:
+            response = "HTTP Error 403: You are not authorized to access the contents of this file"
         else:
             response = "HTTP Error 403: You are not authorized to access this file"
 elif req_type == 'post':
